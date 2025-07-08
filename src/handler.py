@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/chattts")
+from chattts import ChatTTS
 import os
 import io
 import time
@@ -9,7 +12,6 @@ import soundfile as sf
 import numpy as np
 from cryptography.fernet import Fernet
 from diffusers import AutoPipelineForText2Image
-from chattts import ChatTTS
 from faster_whisper import WhisperModel
 
 # ========== Load Models ==========
