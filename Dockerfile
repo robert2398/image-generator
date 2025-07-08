@@ -18,6 +18,7 @@ RUN mkdir -p /checkpoints && \
     python3.11 -c "from huggingface_hub import snapshot_download; snapshot_download('2Noise/ChatTTS', cache_dir='/checkpoints', repo_type='model')"
 
 # Copy application code
+RUN git clone https://github.com/2noise/ChatTTS.git /chattts
 ADD src .
 
 # Start RunPod serverless handler
