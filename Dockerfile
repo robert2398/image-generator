@@ -19,6 +19,7 @@ RUN mkdir -p /checkpoints && \
 
 # Copy application code
 RUN git clone https://github.com/2noise/ChatTTS.git /chattts
+RUN pip install -e /chattts
 ADD src .
 
 # Start RunPod serverless handler
