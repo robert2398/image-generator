@@ -16,5 +16,4 @@ scipy
 soundfile
 librosa
 requests
-chattts @ git+https://github.com/2noise/ChatTTS.git
 faster-whisper
