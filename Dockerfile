@@ -10,7 +10,7 @@ RUN pip install --upgrade pip && \
 
 # Download Whisper model to local HuggingFace cache
 RUN mkdir -p /models/stt && \
-    python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-base.en', cache_dir='/models/stt', repo_type='model')"
+    python3.11 -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-base.en', cache_dir='/models/stt', repo_type='model')"
 
 # Download ChatTTS checkpoint
 RUN mkdir -p /checkpoints && \
