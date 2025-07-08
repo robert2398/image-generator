@@ -1,3 +1,5 @@
+--extra-index-url https://download.pytorch.org/whl/cu118
+
 runpod~=1.7.0
 diffusers
 transformers
@@ -8,7 +10,7 @@ sentencepiece
 tokenizers
 peft
 protobuf>=3.20,<4.0
-torch==2.3.0+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.3.0+cu118
 numpy
 scipy
 soundfile
