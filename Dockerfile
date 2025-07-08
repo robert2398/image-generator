@@ -1,6 +1,7 @@
 FROM runpod/base:0.4.0-cuda11.8.0
 ENV DEBIAN_FRONTEND=noninteractive
 ENV HUGGINGFACE_HUB_CACHE=/models/stt
+ENV TTS_HOME=/checkpoints
 WORKDIR /app
 
 # Install Python dependencies
@@ -14,7 +15,7 @@ RUN mkdir -p /models/stt && \
 
 # Download ChatTTS checkpoint
 RUN mkdir -p /checkpoints && \
-    curl -L https://huggingface.co/2Noise/ChatTTS/resolve/main/ChatTTS.pth -o /checkpoints/ChatTTS.pth
+    python3.11 -c "from huggingface_hub import snapshot_download; snapshot_download('2Noise/ChatTTS', cache_dir='/checkpoints', repo_type='model')"
 
 # Copy application code
 ADD src .
