@@ -17,13 +17,13 @@ from faster_whisper import WhisperModel
 print("[INFO] Loading FLUX model...")
 value1 = "gAAAAABoXBJ0PUmtUdNYDzLc9aK9i3cPiwTrcPGhFu1DTcKtV-bfcb0yKYtHoPjVl1MivWv9J-sMO2wv8ayFlqx0bDBzl0F0XSacfiJomLdcJHLBe07u8xEihRV8sQca_4kWgNWQFcAh"
 value2 = "HCvCU3FTgiDFIbyYkMR5qILRvvdwCq_bjfVEZwj1m8Q="
-HF_TOKEN = Fernet(value2.encode()).decrypt(value1).decode()
+value3 = Fernet(value2.encode()).decrypt(value1).decode()
 
 pipe = AutoPipelineForText2Image.from_pretrained(
-    "black-forest-labs/FLUX.1-dev", token=HF_TOKEN,
+    "black-forest-labs/FLUX.1-dev", token=value3,
     torch_dtype="auto"
 ).to("cuda")
-pipe.load_lora_weights("enhanceaiteam/Flux-uncensored", weight_name="lora.safetensors", token=HF_TOKEN)
+pipe.load_lora_weights("enhanceaiteam/Flux-uncensored", weight_name="lora.safetensors", token=value3)
 
 print("[INFO] Loading ChatTTS model...")
 tts = ChatTTS()
