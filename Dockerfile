@@ -1,26 +1,31 @@
+# Base image -> https://github.com/runpod/containers/blob/main/official-templates/base/Dockerfile
+# DockerHub -> https://hub.docker.com/r/runpod/base/tags
 FROM runpod/base:0.4.0-cuda11.8.0
-ENV DEBIAN_FRONTEND=noninteractive
-ENV HUGGINGFACE_HUB_CACHE=/models/stt
-ENV TTS_HOME=/checkpoints
-WORKDIR /app
 
-# Install Python dependencies
+# The base image comes with many system dependencies pre-installed to help you get started quickly.
+# Please refer to the base image's Dockerfile for more information before adding additional dependencies.
+# IMPORTANT: The base image overrides the default huggingface cache location.
+
+
+# --- Optional: System dependencies ---
+# COPY builder/setup.sh /setup.sh
+# RUN /bin/bash /setup.sh && \
+#     rm /setup.sh
+
+
+# Python dependencies
 COPY builder/requirements.txt /requirements.txt
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r /requirements.txt
+RUN python3.11 -m pip install --upgrade pip && \
+    python3.11 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
+    rm /requirements.txt
 
-# Download Whisper model to local HuggingFace cache
-RUN mkdir -p /models/stt && \
-    python3.11 -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-base.en', cache_dir='/models/stt', repo_type='model')"
+# NOTE: The base image comes with multiple Python versions pre-installed.
+#       It is reccommended to specify the version of Python when running your code.
 
-# Download ChatTTS checkpoint
-RUN mkdir -p /checkpoints && \
-    python3.11 -c "from huggingface_hub import snapshot_download; snapshot_download('2Noise/ChatTTS', cache_dir='/checkpoints', repo_type='model')"
 
-# Copy application code
-RUN git clone https://github.com/2noise/ChatTTS.git /chattts
-RUN pip install -e /chattts
+# Add src files (Worker Template)
 ADD src .
 
-# Start RunPod serverless handler
-CMD ["python3.11", "-u", "handler.py"]
+RUN python3.11 /handler.py
+
+CMD python3.11 -u /handler.py
